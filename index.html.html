@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portafolio Investigadores — DIAN CCHEN 2025</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f2ed;
+    --surface: #ffffff;
+    --surface2: #f9f8f5;
+    --border: #e2dfd8;
+    --border2: #ccc9c0;
+    --text: #1a1916;
+    --text2: #5a5750;
+    --text3: #9a9690;
+    --accent: #1a3a5c;
+
+    --p2mc-bg: #e8f0f8; --p2mc-col: #1a3a5c; --p2mc-av: #b8d0e8; --p2mc-dot: #2d6fa8;
+    --mets-bg: #fdf3e3; --mets-col: #7a4a0a; --mets-av: #f5cc88; --mets-dot: #d4830e;
+    --ctnev-bg: #e8f3e0; --ctnev-col: #2d5a18; --ctnev-av: #b8dca0; --ctnev-dot: #4a9a28;
+    --cefnen-bg: #eeeafc; --cefnen-col: #3d3090; --cefnen-av: #c8c0f0; --cefnen-dot: #5a48c8;
+    --cinasb-bg: #fceae4; --cinasb-col: #8a3018; --cinasb-av: #f0b8a0; --cinasb-dot: #c85030;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--accent);
+    color: #fff;
+    padding: 3rem 2rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: 30%;
+    width: 360px; height: 360px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+  }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .header-kicker {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 10px;
+  }
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(26px, 4vw, 42px);
+    font-weight: 400;
+    line-height: 1.15;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+  header p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.65);
+    max-width: 560px;
+    line-height: 1.6;
+  }
+  .header-stats {
+    display: flex;
+    gap: 28px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+  .hstat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .hstat-num {
+    font-size: 28px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1;
+  }
+  .hstat-lbl {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: .07em;
+  }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* ── FILTERS ── */
+  .filters-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .filters-label {
+    font-size: 12px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    margin-right: 4px;
+  }
+  .fb {
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    padding: 7px 16px;
+    border-radius: 24px;
+    border: 1.5px solid var(--border2);
+    background: var(--surface);
+    color: var(--text2);
+    cursor: pointer;
+    transition: all .18s;
+  }
+  .fb:hover { border-color: var(--accent); color: var(--accent); }
+  .fb.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .fb[data-centro="P2mc"].active  { background: var(--p2mc-col); border-color: var(--p2mc-col); }
+  .fb[data-centro="METS"].active  { background: var(--mets-col); border-color: var(--mets-col); }
+  .fb[data-centro="CTNEV"].active { background: var(--ctnev-col); border-color: var(--ctnev-col); }
+  .fb[data-centro="CEFNEN"].active{ background: var(--cefnen-col); border-color: var(--cefnen-col); }
+  .fb[data-centro="CINASB"].active{ background: var(--cinasb-col); border-color: var(--cinasb-col); }
+
+  .result-count {
+    font-size: 13px;
+    color: var(--text3);
+    margin-left: auto;
+  }
+
+  /* ── SEARCH ── */
+  .search-wrap {
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+  .search-wrap input {
+    width: 100%;
+    max-width: 420px;
+    padding: 10px 16px 10px 40px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    border: 1.5px solid var(--border2);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    outline: none;
+    transition: border-color .18s;
+  }
+  .search-wrap input:focus { border-color: var(--accent); }
+  .search-icon {
+    position: absolute;
+    left: 12px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--text3);
+    pointer-events: none;
+  }
+
+  /* ── GRID ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 18px;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow .2s, transform .2s;
+    animation: fadeUp .4s ease both;
+  }
+  .card:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.09);
+    transform: translateY(-2px);
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-accent {
+    height: 5px;
+    width: 100%;
+  }
+
+  .card-head {
+    padding: 18px 20px 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 600;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .name-block { flex: 1; min-width: 0; }
+  .name-block h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 3px;
+  }
+  .name-block .profesion {
+    font-size: 12px;
+    color: var(--text2);
+  }
+  .orcid-link {
+    font-size: 11px;
+    color: var(--text3);
+    text-decoration: none;
+    margin-top: 3px;
+    display: inline-block;
+  }
+  .orcid-link:hover { color: var(--accent); }
+
+  .centro-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin: 0 20px 12px;
+    width: fit-content;
+  }
+  .centro-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .card-body { padding: 0 20px 18px; flex: 1; display: flex; flex-direction: column; gap: 14px; }
+
+  .section-lbl {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 6px;
+  }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 6px;
+    background: var(--surface2);
+    color: var(--text2);
+    border: 1px solid var(--border);
+    line-height: 1.5;
+  }
+
+  .pub-list { display: flex; flex-direction: column; gap: 7px; }
+  .pub-item {
+    font-size: 12px;
+    color: var(--text);
+    line-height: 1.5;
+    padding-bottom: 7px;
+    border-bottom: 1px solid var(--border);
+  }
+  .pub-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .pub-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+  .badge-1 { background: #deeefa; color: #0d4a80; }
+  .badge-2 { background: #dff0d8; color: #2a6010; }
+  .badge-co { background: var(--surface2); color: var(--text3); border: 1px solid var(--border); }
+  .pub-revista { font-size: 11px; color: var(--text3); font-style: italic; }
+  .pub-q { font-size: 10px; font-weight: 600; padding: 1px 5px; border-radius: 3px; margin-left: 4px; }
+  .q1 { background: #fff3cd; color: #7a5800; }
+  .q2 { background: #d4edda; color: #1a5c28; }
+  .q3 { background: #f8d7da; color: #721c24; }
+
+  .proj-list { display: flex; flex-direction: column; gap: 5px; }
+  .proj-item {
+    font-size: 12px;
+    color: var(--text);
+    line-height: 1.5;
+    padding: 6px 9px;
+    background: var(--surface2);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .proj-code {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text3);
+    margin-right: 4px;
+  }
+
+  .empty-note {
+    font-size: 12px;
+    color: var(--text3);
+    font-style: italic;
+  }
+
+  .toggle-btn {
+    font-size: 11px;
+    color: var(--accent);
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: inherit;
+    padding: 2px 0;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .toggle-btn:hover { opacity: .7; }
+
+  .hidden { display: none; }
+
+  /* ── NO RESULTS ── */
+  .no-results {
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 4rem 0;
+    color: var(--text3);
+    font-size: 15px;
+  }
+
+  /* ── LEGEND ── */
+  .legend {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 1.25rem;
+    padding: 10px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    width: fit-content;
+  }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text2); }
+  .legend-badge { width: 18px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 12px;
+    color: var(--text3);
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width: 600px){
+    header { padding: 2rem 1.25rem; }
+    main { padding: 1.25rem 1rem 3rem; }
+    .grid { grid-template-columns: 1fr; }
+    .result-count { margin-left: 0; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <p class="header-kicker">División de Investigación y Aplicaciones Nucleares</p>
+    <h1>Portafolio de<br>Investigadores CCHEN</h1>
+    <p>Directorio científico de los centros de investigación de la DIAN. Incluye líneas de investigación, proyectos vigentes y publicaciones científicas 2025.</p>
+    <div class="header-stats">
+      <div class="hstat"><span class="hstat-num">27</span><span class="hstat-lbl">Investigadores</span></div>
+      <div class="hstat"><span class="hstat-num">5</span><span class="hstat-lbl">Centros DIAN</span></div>
+      <div class="hstat"><span class="hstat-num">20</span><span class="hstat-lbl">Proyectos vigentes</span></div>
+      <div class="hstat"><span class="hstat-num">25</span><span class="hstat-lbl">Publicaciones 2025</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <div class="search-wrap">
+    <svg class="search-icon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+    </svg>
+    <input type="text" id="searchInput" placeholder="Buscar por nombre, área o línea de investigación…" oninput="applyFilters()">
+  </div>
+
+  <div class="filters-bar">
+    <span class="filters-label">Centro</span>
+    <button class="fb active" data-centro="all" onclick="setFilter('all')">Todos</button>
+    <button class="fb" data-centro="P2mc" onclick="setFilter('P2mc')">P2mc</button>
+    <button class="fb" data-centro="METS" onclick="setFilter('METS')">METS</button>
+    <button class="fb" data-centro="CTNEV" onclick="setFilter('CTNEV')">CTNEV</button>
+    <button class="fb" data-centro="CEFNEN" onclick="setFilter('CEFNEN')">CEFNEN</button>
+    <button class="fb" data-centro="CINASB" onclick="setFilter('CINASB')">CINASB</button>
+    <span class="result-count" id="resultCount">27 investigadores</span>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-badge badge-1"></div>1er autor</div>
+    <div class="legend-item"><div class="legend-badge badge-2"></div>2do autor</div>
+    <div class="legend-item"><div class="legend-badge badge-co" style="border:1px solid #ccc"></div>Co-autor</div>
+    <div class="legend-item"><div class="legend-badge q1"></div>Q1</div>
+    <div class="legend-item"><div class="legend-badge q2"></div>Q2</div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer>
+  <p>Comisión Chilena de Energía Nuclear (CCHEN) · División de Investigación y Aplicaciones Nucleares (DIAN) · 2025</p>
+  <p style="margin-top:6px">Para agregar fotografías, reemplaza el texto de la propiedad <code>foto</code> de cada investigador con la ruta a su imagen (ej: <code>"fotos/nombre.jpg"</code>).</p>
+</footer>
+
+<script>
+const CENTROS = {
+  P2mc:   {label:"P2mc",   full:"Física de Plasmas, Materia y Complejidad",    bg:"var(--p2mc-bg)",   col:"var(--p2mc-col)",   av:"var(--p2mc-av)",   dot:"var(--p2mc-dot)",   acento:"#2d6fa8"},
+  METS:   {label:"METS",   full:"Materiales para la Transición Energética",     bg:"var(--mets-bg)",   col:"var(--mets-col)",   av:"var(--mets-av)",   dot:"var(--mets-dot)",   acento:"#d4830e"},
+  CTNEV:  {label:"CTNEV",  full:"Tecnologías Nucleares en Ecosistemas Vulnerables", bg:"var(--ctnev-bg)",  col:"var(--ctnev-col)",  av:"var(--ctnev-av)",  dot:"var(--ctnev-dot)",  acento:"#4a9a28"},
+  CEFNEN: {label:"CEFNEN", full:"Física Nuclear y Espectroscopía de Neutrones", bg:"var(--cefnen-bg)", col:"var(--cefnen-col)", av:"var(--cefnen-av)", dot:"var(--cefnen-dot)", acento:"#5a48c8"},
+  CINASB: {label:"CINASB", full:"Investigaciones Nucleares en Salud y Biomedicina", bg:"var(--cinasb-bg)", col:"var(--cinasb-col)", av:"var(--cinasb-av)", dot:"var(--cinasb-dot)", acento:"#c85030"}
+};
+
+const DATA = [
+  {
+    nombre:"Leopoldo Soto Norambuena", profesion:"Físico", centro:"P2mc", foto:"",
+    lineas:["Plasma Physics","Transient Electrical Discharges","Dense Z-pinch","Plasma Focus","Nuclear fusion in small devices"],
+    proyectos:[
+      {cod:"21-026",titulo:"Propulsor de plasma miniaturizado para nanosatélites CubeSat"},
+      {cod:"25-002 co-inv.",titulo:"Dinámica axial de fusión de plasma en plasma focus"},
+      {cod:"P-MICE",titulo:"Centro Público de Imagenología Molecular (dir.)"}
+    ],
+    pubs:[],
+    orcid:"0000-0001-7263-8837"
+  },
+  {
+    nombre:"Cristian Pavez Morales", profesion:"Físico", centro:"P2mc", foto:"",
+    lineas:["Plasmas Physics and Pulsed Power","Fusión","Z-pinche","Plasma Focus","Capillary discharges"],
+    proyectos:[
+      {cod:"21-021",titulo:"Investigación fundamental en dispositivos Plasma focus de baja energía"},
+      {cod:"25-002",titulo:"Estudio y caracterización dinámica axial de fusión de plasma en plasma focus"}
+    ],
+    pubs:[], orcid:""
+  },
+  {
+    nombre:"Sergio Davis Irarrazabal", profesion:"Ingeniero Físico", centro:"P2mc", foto:"",
+    lineas:["Statistical Mechanics","Computer Simulation","Plasma Physics","High-Pressure Physics","Condensed Matter Physics"],
+    proyectos:[
+      {cod:"21-027",titulo:"Mecánica estadística bayesiana para sistemas fuera del equilibrio"},
+      {cod:"Fondecyt R 2026",titulo:"Complexity, correlations and the meaning of temperature (postulado)"}
+    ],
+    pubs:[
+      {titulo:"Superstatistics as the thermodynamic limit of driven classical systems",revista:"Physics A",year:2025,cuartil:"Q1",rol:1},
+      {titulo:"A quantum expectation identity: Applications to statistical mechanics",revista:"Physics A",year:2025,cuartil:"Q1",rol:2},
+      {titulo:"Microcanonical Monte Carlo simulation of opinion dynamics under mass media influence",revista:"Physics A",year:2025,cuartil:"Q1",rol:3},
+      {titulo:"Fragile systems: A hidden-variable Bayesian framework leading to quantum theory",revista:"Results In Physics",year:2025,cuartil:"Q1",rol:2}
+    ],
+    orcid:"0000-0003-2757-332X"
+  },
+  {
+    nombre:"Rodrigo López Herrera", profesion:"Físico", centro:"P2mc", foto:"",
+    lineas:["Física de Plasmas","Física Espacial","Astrofísica"],
+    proyectos:[
+      {cod:"25-003",titulo:"Estudio de la interacción entre inestabilidades cinéticas y turbulencia en plasmas sin colisiones"}
+    ],
+    pubs:[
+      {titulo:"Dynamic spectra of solar radio emissions from weak-turbulence simulation",revista:"Astronomy & Astrophysics",year:2025,cuartil:"Q1",rol:4},
+      {titulo:"Extended Scenarios for Solar Radio Emissions With Downshifted Electron Beam Plasma Excitations",revista:"JGR Space Physics",year:2025,cuartil:"Q1",rol:2},
+      {titulo:"Heat-flux Instabilities of Regularized Kappa Distributed Strahl Electrons Resolved with ALPS",revista:"Astrophysical Journal",year:2025,cuartil:"Q1",rol:3}
+    ],
+    orcid:"0000-0003-3223-1498"
+  },
+  {
+    nombre:"José Moreno Martinez", profesion:"Físico", centro:"P2mc", foto:"",
+    lineas:["X-rays from pulsed plasmas","Plasma ionization processes","Transient electrical discharge","Dense Transient Plasma","Plasma Focus"],
+    proyectos:[
+      {cod:"24-009",titulo:"Uso de dispositivo plasma focus como fuente de radiación pulsada para estudiar daño ADN"}
+    ],
+    pubs:[], orcid:""
+  },
+  {
+    nombre:"Biswajit Bora", profesion:"Físico", centro:"P2mc", foto:"",
+    lineas:["Plasma Device","Modeling and Simulation in Plasma","Experimental Plasma Physics","Plasma Torches","RF Plasma"],
+    proyectos:[
+      {cod:"Fondecyt R 2023",titulo:"Síntesis de nanopartículas a base de litio mediante expansión de plasma térmico supersónico"}
+    ],
+    pubs:[], orcid:"0000-0002-3366-8459"
+  },
+  {
+    nombre:"Jalaj Jain", profesion:"Físico", centro:"P2mc", foto:"",
+    lineas:["Plasma physics","Plasma focus","X-rays","Neutrons","Nuclear fusion"],
+    proyectos:[
+      {cod:"23-007",titulo:"Efectos de la radiación pulsada: fuente de radiación pulsada basada en plasma focus"}
+    ],
+    pubs:[], orcid:"0000-0003-1431-2251"
+  },
+  {
+    nombre:"Daniel Zanelli", profesion:"Ing. Civil Mecánico", centro:"P2mc", foto:"",
+    lineas:["Mechanical and electronic systems","Software development","Artificial intelligence"],
+    proyectos:[], pubs:[], orcid:""
+  },
+  {
+    nombre:"Julio Urzúa Piña", profesion:"Químico", centro:"METS", foto:"",
+    lineas:["Ionic liquids and deep eutectic solvents in energy systems","Hybrid materials and nanomaterials","Lithium and critical materials","Polymers"],
+    proyectos:[
+      {cod:"22-001",titulo:"Extracción simultánea de Mg y B para salmueras de litio de alta pureza"},
+      {cod:"24-012",titulo:"Modernización tecnológica para purificación de salmueras de Litio"}
+    ],
+    pubs:[
+      {titulo:"Effective One-Component Organocatalysts for Eco-Friendly Production of Cyclic Carbonates",revista:"Reactions",year:2025,cuartil:"Q3",rol:5},
+      {titulo:"Exploration of Lithium Brine Purification via Simultaneous Extraction of Mg and B Using Novel Ionic Liquids",revista:"J. Molecular Liquids",year:2025,cuartil:"Q1",rol:3},
+      {titulo:"Purification of Lithium Brines: Optimizing Simultaneous Mg and B Extraction",revista:"Chemical Engineering R&D",year:2025,cuartil:"Q2",rol:3}
+    ],
+    orcid:"0000-0003-4568-8788"
+  },
+  {
+    nombre:"María José Inestrosa Izurieta", profesion:"Física", centro:"METS", foto:"",
+    lineas:["Producción y tratamiento de materiales por plasma","Caracterización de nanomateriales","Diseño experimental y optimización de procesos","Nanociencias","Materiales"],
+    proyectos:[
+      {cod:"Fondequip 2023",titulo:"Confocal-Raman-AFM para análisis de material nuclear"},
+      {cod:"Fondecyt R 2025 co-inv.",titulo:"Blindaje flexible contra neutrones — nanocompuestos elastómeros"}
+    ],
+    pubs:[
+      {titulo:"Purification of Lithium Brines: Optimizing Simultaneous Mg and B Extraction",revista:"Chemical Engineering R&D",year:2025,cuartil:"Q2",rol:2},
+      {titulo:"Tailoring of titanium dioxide thin film in dual radiofrequency plasma enhanced pulsed laser deposition",revista:"Applied Surface Science",year:2025,cuartil:"Q1",rol:9}
+    ],
+    orcid:"0000-0003-4225-7106"
+  },
+  {
+    nombre:"Merlys Borges Martinez", profesion:"Química", centro:"METS", foto:"",
+    lineas:["Química cuántica aplicada a materiales y celdas solares","Electrónica molecular","Celdas de combustibles"],
+    proyectos:[
+      {cod:"25-001",titulo:"Estudio teórico y experimental de perovskitas en capas como cátodo para SOFCs"}
+    ],
+    pubs:[
+      {titulo:"Exploration of Lithium Brine Purification via Simultaneous Extraction of Mg and B Using Novel Ionic Liquids",revista:"J. Molecular Liquids",year:2025,cuartil:"Q1",rol:4}
+    ],
+    orcid:"0000-0001-8130-1718"
+  },
+  {
+    nombre:"Nicole Parra Muñoz", profesion:"Química", centro:"METS", foto:"",
+    lineas:["Química de materiales","Almacenamiento de energía","Síntesis orgánica"],
+    proyectos:[
+      {cod:"24-013",titulo:"Nb2C MXene con complejo cobre-curcumina-bipiridina para aplicaciones antitumorales"}
+    ],
+    pubs:[
+      {titulo:"Exploration of Lithium Brine Purification via Simultaneous Extraction of Mg and B Using Novel Ionic Liquids",revista:"J. Molecular Liquids",year:2025,cuartil:"Q1",rol:2},
+      {titulo:"Silica-coated gold nanorods conjugated with CRANAD for detection of soluble β-amyloid species",revista:"Colloids and Surfaces B",year:2025,cuartil:"Q1",rol:3}
+    ],
+    orcid:"0000-0002-8604-5343"
+  },
+  {
+    nombre:"Luis Ballesteros Pulgares", profesion:"Químico", centro:"METS", foto:"",
+    lineas:["Ciencias de los materiales y nanotecnología","Electroquímica y fotoelectroquímica","Conversión y almacenamiento de energía solar"],
+    proyectos:[
+      {cod:"Fondecyt R 2026",titulo:"Recuperación de tierras raras de residuos de imanes permanentes usando HDES (postulado)"}
+    ],
+    pubs:[], orcid:"0000-0002-8370-0680"
+  },
+  {
+    nombre:"José Hernández Torres", profesion:"Ing. Civil en Metalurgia", centro:"METS", foto:"",
+    lineas:["Concentración y purificación de Cu, Li, U, Mo y tierras raras mediante procesos químicos y metalúrgicos"],
+    proyectos:[
+      {cod:"24-015",titulo:"Reconversión tecnológica de relaves: Innovación para la minería secundaria"}
+    ],
+    pubs:[], orcid:""
+  },
+  {
+    nombre:"Adriana Nario Mouat", profesion:"Ing. Agrónoma", centro:"CTNEV", foto:"",
+    lineas:["Conservación de suelos (fertilidad, erosión)","Sistemas de cultivos sustentable (eficiencia de agua, agroquímicos)","Cambio climático (GEI, adaptación de especies)"],
+    proyectos:[
+      {cod:"21-009",titulo:"Transferencia de radionúclidos en ambientes áridos y semiáridos"}
+    ],
+    pubs:[
+      {titulo:"Calcium allocation to tree canopy and edible part of sweet cherry fruit hindered by boron soil deficiency",revista:"Agronomy",year:2025,cuartil:"Q1",rol:3},
+      {titulo:"Can we use stable 133Cs to evaluate uptake risk of radioequivalent 137Cs by crops?",revista:"Science of the Total Environment",year:2025,cuartil:"Q1",rol:4}
+    ],
+    orcid:"0000-0001-7383-7803"
+  },
+  {
+    nombre:"Ana Valdés Duran", profesion:"Geóloga", centro:"CTNEV", foto:"",
+    lineas:["Geoquímica del Medio Ambiente e Impacto en Salud Pública","Discriminación entre fuentes naturales y antropogénicas de contaminación"],
+    proyectos:[
+      {cod:"23-002",titulo:"Evaluación de efectos de metales pesados en suelos contaminados"},
+      {cod:"Fondecyt R 2026",titulo:"Geo-Chemistry Anomalies and Health: Non-Transmissible Disease Mortality (postulado)"}
+    ],
+    pubs:[], orcid:"0000-0001-8496-6862"
+  },
+  {
+    nombre:"Daniel Villegas Nassar", profesion:"Agrónomo", centro:"CTNEV", foto:"",
+    lineas:["Efecto de radiaciones ionizantes sobre crecimiento de especies forestales","Eco-fisiología y relaciones hídricas de plantas","Vitivinicultura","Floración"],
+    proyectos:[
+      {cod:"24-010",titulo:"Radiación ionizante para mejorar germinación de especies forestales nativas vulnerables"},
+      {cod:"Fondecyt R 2026",titulo:"Radiopriming multimodal para inducir radioestimulación en cultivos agrícolas (postulado)"}
+    ],
+    pubs:[
+      {titulo:"Enhancing Growth and Salinity Stress Tolerance in Arabidopsis with Low-Dose Gamma Radiation Priming",revista:"Plant Stress",year:2025,cuartil:"Q1",rol:1}
+    ],
+    orcid:"0000-0001-6756-4140"
+  },
+  {
+    nombre:"Enrique Mejías Barrios", profesion:"Bioquímico", centro:"CTNEV", foto:"",
+    lineas:["Mieles chilenas como indicadores de contaminación ambiental","Contaminantes y propiedades antioxidantes en polen","Detección de residuos no deseados en productos apícolas","Aseguramiento de calidad e inocuidad apícola"],
+    proyectos:[
+      {cod:"23-004",titulo:"Fortalecimiento del sistema nacional de verificación de autenticidad y origen de alimentos"}
+    ],
+    pubs:[
+      {titulo:"Natural Biological Properties Inherited from Native Endemic Flora in Honeys from Lake Ranco Area of Southern Chile",revista:"Molecules",year:2025,cuartil:"Q1",rol:1}
+    ],
+    orcid:"0000-0001-5577-3025"
+  },
+  {
+    nombre:"Doris Ly Muñoz", profesion:"Ing. Agrónoma", centro:"CTNEV", foto:"",
+    lineas:["Uso de irradiación gamma para radiohormesis y/o mutagénesis vegetal","Gestión tecnológica"],
+    proyectos:[
+      {cod:"ANID 2025",titulo:"Innovación en fitomejoramiento sostenible Chile-México frente a crisis climática (no adjudicado)"}
+    ],
+    pubs:[], orcid:""
+  },
+  {
+    nombre:"Lisette Zenteno Devaud", profesion:"Bióloga Marina", centro:"CTNEV", foto:"",
+    lineas:["Rol de las especies y sus cambios bajo perturbaciones naturales y antropogénicas"],
+    proyectos:[
+      {cod:"Fondecyt Inic. 2026",titulo:"Contaminación y ecología trófica en pingüinos de Magallanes (postulado)"},
+      {cod:"OIEA CRP",titulo:"Análisis comparativo de detección de microplásticos en Mytilus chilensis (postulado)"}
+    ],
+    pubs:[], orcid:"0000-0002-1619-911X"
+  },
+  {
+    nombre:"Francisco Molina Palacios", profesion:"Físico", centro:"CEFNEN", foto:"",
+    lineas:["Experimental nuclear physics","Beta-decay measurements of exotic nuclei","Pulsed neutron spectroscopy","Cosmic ray neutron measurements","Research reactor neutron characterizations"],
+    proyectos:[
+      {cod:"22-002",titulo:"Medición simultánea de espectroscopía de neutrones de rayos cósmicos a lo largo de Chile"},
+      {cod:"Fondecyt R 2025 co-inv.",titulo:"Blindaje flexible contra neutrones — nanocompuestos elastómeros"}
+    ],
+    pubs:[
+      {titulo:"Discovery of 98Sn produced by projectile fragmentation of 124Xe beam",revista:"PTEP",year:2025,cuartil:"Q1",rol:21},
+      {titulo:"Isospin symmetry breaking in the 71Kr and 71Br mirror systems",revista:"Physical Review Letters",year:2025,cuartil:"Q1",rol:20},
+      {titulo:"Measurements of β-delayed proton emitters in the region of 100Sn",revista:"Physical Review C",year:2025,cuartil:"Q1",rol:20},
+      {titulo:"The beta decay of Tz=−2 64Se and its descendants: the T=2 isobaric multiplet",revista:"Physical Review C",year:2025,cuartil:"Q1",rol:2}
+    ],
+    orcid:"0000-0002-9459-1336"
+  },
+  {
+    nombre:"Jaime Romero Barrientos", profesion:"Físico", centro:"CEFNEN", foto:"",
+    lineas:["Time dependent and Transient Monte Carlo simulations","Nuclear reactor physics","Neutron spectrometry"],
+    proyectos:[
+      {cod:"24-001",titulo:"Monte Carlo transiente en reactor nuclear con precursores de neutrones beta retardados"}
+    ],
+    pubs:[], orcid:"0000-0002-3256-8181"
+  },
+  {
+    nombre:"Marcelo Zambra Yañez", profesion:"Físico", centro:"CEFNEN", foto:"",
+    lineas:["Estudios de ionización y generación de rayos X","Distribución de flujo y transporte de neutrones en reactor nuclear de investigación"],
+    proyectos:[], pubs:[], orcid:"0009-0000-7299-0515"
+  },
+  {
+    nombre:"Ethel Velásquez Opazo", profesion:"Bioquímica", centro:"CINASB", foto:"",
+    lineas:["Aplicaciones de Energía Nuclear","Radiaciones y Tecnologías Nucleares","Radiobiología","Radiofarmacia","Bancos de Tejidos"],
+    proyectos:[
+      {cod:"24-008",titulo:"Fortalecimiento capacidades nacionales para generación y uso de tejidos radioesterilizados"}
+    ],
+    pubs:[], orcid:"0000-0002-8768-9458"
+  },
+  {
+    nombre:"Felipe Olate Moya", profesion:"Químico", centro:"CINASB", foto:"",
+    lineas:["Desarrollo y caracterización de biomateriales","Materiales inteligentes o multifuncionales","Polímeros, nanomateriales y compósitos"],
+    proyectos:[
+      {cod:"24-014",titulo:"Parches cardíacos multifuncionales basados en biomateriales electroconductores"}
+    ],
+    pubs:[
+      {titulo:"Micro-arranged ZnO particles and conductive fillers in PCL composites for enhanced piezoelectric properties in bone tissue engineering",revista:"Materials and Design",year:2025,cuartil:"Q1",rol:2},
+      {titulo:"Multifunctional Electroactive 3D-printed Scaffolds with Polypyrrole-based Coatings for Biomedical Applications",revista:"Macromolecular Rapid Communications",year:2025,cuartil:"Q1",rol:1},
+      {titulo:"Photothermally Responsive Double-Network Hydrogels with MoS2 Nanosheets: A High-toughness Self-healing Biomaterial",revista:"Applied Materials Today",year:2025,cuartil:"Q1",rol:2}
+    ],
+    orcid:"0000-0002-2000-0708"
+  },
+  {
+    nombre:"Roberto Mercado Muñoz", profesion:"Químico", centro:"CINASB", foto:"",
+    lineas:["Desarrollo de técnicas de radiomarcación y análisis de radiofármacos PET","SPECT — Tomografía computarizada de fotón único"],
+    proyectos:[], pubs:[], orcid:""
+  },
+  {
+    nombre:"Andreas Arellano (Tapia)", profesion:"Bioquímico", centro:"CINASB", foto:"",
+    lineas:["Nanotecnología","Enfermedades neurodegenerativas","Microfluídica Organ-on-a-chip"],
+    proyectos:[], pubs:[], orcid:"0000-0003-0660-8837"
+  }
+];
+
+function initials(nombre){
+  const p = nombre.trim().split(' ');
+  return ((p[0]||'')[0]||('')).toUpperCase() + ((p[1]||'')[0]||('')).toUpperCase();
+}
+
+function badgeRol(rol){
+  if(rol===1) return '<span class="pub-badge badge-1">1er autor</span>';
+  if(rol===2) return '<span class="pub-badge badge-2">2do autor</span>';
+  return '<span class="pub-badge badge-co">co-autor</span>';
+}
+
+function cuartilBadge(q){
+  if(!q) return '';
+  const cls = q==='Q1'?'q1':q==='Q2'?'q2':'q3';
+  return `<span class="pub-q ${cls}">${q}</span>`;
+}
+
+function renderCard(d, idx){
+  const c = CENTROS[d.centro];
+  const uid = 'inv_'+idx;
+  const ini = initials(d.nombre);
+
+  const avatarHtml = d.foto
+    ? `<div class="avatar"><img src="${d.foto}" alt="Foto de ${d.nombre}" loading="lazy"></div>`
+    : `<div class="avatar" style="background:${c.av};color:${c.col}">${ini}</div>`;
+
+  const lineas = d.lineas;
+  const lineasHtml = lineas.length > 0
+    ? `<div>
+        <div class="section-lbl">Líneas de investigación</div>
+        <div class="tags">
+          ${lineas.slice(0,3).map(l=>`<span class="tag">${l}</span>`).join('')}
+          ${lineas.length>3 ? `
+            <button class="toggle-btn" onclick="toggle('${uid}_lin',this,'lineas')">+${lineas.length-3} más</button>
+            <div id="${uid}_lin" class="hidden tags" style="margin-top:5px;width:100%">
+              ${lineas.slice(3).map(l=>`<span class="tag">${l}</span>`).join('')}
+            </div>` : ''}
+        </div>
+      </div>` : '';
+
+  const proyHtml = d.proyectos.length > 0
+    ? `<div>
+        <div class="section-lbl">Proyectos vigentes</div>
+        <div class="proj-list">
+          ${d.proyectos.map(p=>`<div class="proj-item"><span class="proj-code">[${p.cod}]</span>${p.titulo}</div>`).join('')}
+        </div>
+      </div>`
+    : `<div><div class="section-lbl">Proyectos vigentes</div><p class="empty-note">Sin proyectos registrados como investigador/a principal</p></div>`;
+
+  const pubs1y2 = d.pubs.filter(p=>p.rol<=2);
+  const pubsOther = d.pubs.filter(p=>p.rol>2);
+  let pubsHtml = `<div><div class="section-lbl">Publicaciones 2025</div>`;
+  if(d.pubs.length===0){
+    pubsHtml += `<p class="empty-note">Sin publicaciones registradas como 1er o 2do autor en 2025</p>`;
+  } else {
+    pubsHtml += `<div class="pub-list">
+      ${pubs1y2.map(p=>`<div class="pub-item">${badgeRol(p.rol)}<em>${p.titulo}</em>${cuartilBadge(p.cuartil)}<br><span class="pub-revista">${p.revista}, ${p.year}</span></div>`).join('')}
+      ${pubsOther.length>0 ? `
+        <button class="toggle-btn" onclick="toggle('${uid}_pub',this,'publicaciones')">+ ${pubsOther.length} publicación(es) adicional(es)</button>
+        <div id="${uid}_pub" class="hidden">
+          ${pubsOther.map(p=>`<div class="pub-item">${badgeRol(p.rol)}<em>${p.titulo}</em>${cuartilBadge(p.cuartil)}<br><span class="pub-revista">${p.revista}, ${p.year}</span></div>`).join('')}
+        </div>` : ''}
+    </div>`;
+  }
+  pubsHtml += `</div>`;
+
+  const orcidHtml = d.orcid
+    ? `<a class="orcid-link" href="https://orcid.org/${d.orcid}" target="_blank" rel="noopener">orcid.org/${d.orcid}</a>`
+    : '';
+
+  return `
+  <article class="card" data-centro="${d.centro}" data-search="${d.nombre.toLowerCase()} ${d.lineas.join(' ').toLowerCase()} ${d.profesion.toLowerCase()}">
+    <div class="card-accent" style="background:${c.acento}"></div>
+    <div class="card-head">
+      ${avatarHtml}
+      <div class="name-block">
+        <h2>${d.nombre}</h2>
+        <p class="profesion">${d.profesion}</p>
+        ${orcidHtml}
+      </div>
+    </div>
+    <div class="centro-pill" style="background:${c.bg};color:${c.col}">
+      <span class="centro-dot" style="background:${c.dot}"></span>
+      <strong>${c.label}</strong> · ${c.full}
+    </div>
+    <div class="card-body">
+      ${lineasHtml}
+      ${proyHtml}
+      ${pubsHtml}
+    </div>
+  </article>`;
+}
+
+function toggle(id, btn, tipo){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.classList.toggle('hidden');
+  if(el.classList.contains('hidden')){
+    const n = el.querySelectorAll('.pub-item, .tag').length;
+    btn.textContent = `+ ${n} ${tipo} adicional(es)`;
+  } else {
+    btn.textContent = `Ocultar ${tipo}`;
+  }
+}
+
+let currentCentro = 'all';
+
+function setFilter(centro){
+  currentCentro = centro;
+  document.querySelectorAll('.fb').forEach(b => {
+    b.classList.toggle('active', b.dataset.centro === centro);
+  });
+  applyFilters();
+}
+
+function applyFilters(){
+  const q = (document.getElementById('searchInput').value||'').toLowerCase();
+  const cards = document.querySelectorAll('.card');
+  let visible = 0;
+  cards.forEach(card => {
+    const matchCentro = currentCentro==='all' || card.dataset.centro===currentCentro;
+    const matchSearch = !q || card.dataset.search.includes(q);
+    const show = matchCentro && matchSearch;
+    card.style.display = show ? '' : 'none';
+    if(show) visible++;
+  });
+  document.getElementById('resultCount').textContent = visible + ' investigador' + (visible!==1?'es':'');
+  const noRes = document.getElementById('noResults');
+  if(noRes) noRes.style.display = visible===0 ? '' : 'none';
+}
+
+// Render
+const grid = document.getElementById('grid');
+grid.innerHTML = DATA.map((d,i) => renderCard(d,i)).join('') +
+  `<div id="noResults" class="no-results" style="display:none">No se encontraron investigadores con ese criterio de búsqueda.</div>`;
+</script>
+</body>
+</html>
